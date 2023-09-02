@@ -19,10 +19,13 @@ const createMonacoEditor = (containerId: string) => {
 
   editorConfig.setMainCode(`// Fettuccine is running in the web!`);
   editorConfig.setTheme("vs-light");
-  editorConfig.setUseLanguageClient(true);
+  editorConfig.setUseLanguageClient(false);
   editorConfig.setUseWebSocket(false);
 
-  const workerURL = new URL("./fettuccine-server-worker.js", import.meta.url);
+  const workerURL = new URL(
+    "./fettuccine-server-worker.js",
+    new URL("", window.location.href).href,
+  );
   console.log(workerURL.href);
 
   const lsWorker = new Worker(workerURL.href, {
@@ -31,7 +34,9 @@ const createMonacoEditor = (containerId: string) => {
   });
   client.setWorker(lsWorker);
 
-  client.startEditor(document.getElementById(containerId));
+  const startingPromise = client.startEditor(
+    document.getElementById(containerId),
+  );
   window.addEventListener("resize", () => client.updateLayout());
 
   return client;

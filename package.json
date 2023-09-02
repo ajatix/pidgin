@@ -23,7 +23,7 @@
   "scripts": {
     "clean": "prettier --write src/",
     "generate:langium": "langium generate",
-    "prepare:langium": "",
+    "prepare:langium": "esbuild --minify src/language/worker.ts --bundle --format=iife --outfile=./public/fettuccine-server-worker.js",
     "prepare:monaco": "shx cp -R node_modules/monaco-editor-workers/dist/workers public/monaco-workers",
     "prepare:elk": "shx mkdir public/elk-workers & shx cp -R node_modules/elkjs/lib/elk-worker.js public/elk-workers/elk-worker.js",
     "start": "react-scripts start",
