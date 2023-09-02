@@ -9,16 +9,22 @@ import { Box } from "grommet";
 
 type SprottyDiagramProps = {
   graph: SGraph;
+  update: boolean;
 };
 
 const SprottyDiagram = (props: SprottyDiagramProps) => {
-  const { graph } = props;
+  const { graph, update } = props;
+
+  const container = createContainer(graph.id);
+  const modelSource = container.get<LocalModelSource>(TYPES.ModelSource);
 
   useEffect(() => {
-    const container = createContainer(graph.id);
-    const modelSource = container.get<LocalModelSource>(TYPES.ModelSource);
     modelSource.setModel(graph);
-  }, [graph]);
+  }, [modelSource, graph]);
+
+  useEffect(() => {
+    modelSource.updateModel();
+  }, [modelSource, update]);
 
   return <Box gridArea="diagram" id={graph.id} pad="small" />;
 };

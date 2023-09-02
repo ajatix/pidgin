@@ -33,7 +33,7 @@ function App() {
           </Text>
         </Box>
         <Box gridArea="editor" background="light-2" />
-        <SprottyDiagram graph={graph} />
+        <SprottyDiagram graph={graph} update={false} />
       </Grid>
     </Grommet>
   );
