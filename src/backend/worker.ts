@@ -10,8 +10,9 @@ import { ServerReadyAction, serverReadyKind } from "../protocol/handshake";
 import { createFettuccineServices } from "./language/fettuccine-module";
 
 /* browser specific setup code */
-const messageReader = new BrowserMessageReader(self);
-const messageWriter = new BrowserMessageWriter(self);
+
+const messageReader = new BrowserMessageReader(self); // eslint-disable-line no-restricted-globals
+const messageWriter = new BrowserMessageWriter(self); // eslint-disable-line no-restricted-globals
 
 const connection = createConnection(messageReader, messageWriter);
 

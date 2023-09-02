@@ -1,8 +1,8 @@
 import "reflect-metadata";
 import { TYPES } from "sprotty";
-import createMonacoEditor from "./frontend/monaco";
 import createContainer from "./frontend/di.config";
 import { LSWorkerDiagramServerProxy } from "./frontend/ls-worker-proxy";
+import createMonacoEditor from "./frontend/monaco";
 
 function startFettuccine() {
   const { client, editorPromise } = createMonacoEditor("monaco-editor");

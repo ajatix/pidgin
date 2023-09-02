@@ -13,8 +13,8 @@ export class FettuccineLayoutConfigurator extends DefaultLayoutConfigurator {
       "org.eclipse.elk.edgeRouting": "ORTHOGONAL",
       "org.eclipse.elk.spacing.nodeNode": "30.0",
       "org.eclipse.elk.layered.spacing.edgeNodeBetweenLayers": "30.0",
-      "org.eclipse.elk.spacing.edgeEdge": "22.0",
-      "org.eclipse.elk.spacing.portPort": "22.0",
+      "org.eclipse.elk.spacing.edgeEdge": "30.0",
+      "org.eclipse.elk.spacing.portPort": "30.0",
     };
   }
 

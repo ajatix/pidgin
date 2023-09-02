@@ -19,14 +19,13 @@ import {
   IElementFilter,
   ILayoutConfigurator,
 } from "sprotty-elk/lib/inversify";
-
 import { FettuccineDiagramGenerator } from "../diagram-generator";
+import { FettuccineLayoutConfigurator } from "../layout-config";
 import { FettuccineValidator } from "./fettuccine-validator";
 import {
   FettuccineGeneratedModule,
   FettuccineGeneratedSharedModule,
 } from "./generated/module";
-import { FettuccineLayoutConfigurator } from "../layout-config";
 
 export type FettuccineAddedServices = {
   validation: {
@@ -46,6 +45,7 @@ export const FettuccineModule: Module<
   SprottyDiagramServices & FettuccineAddedServices
 > = {
   diagram: {
+    // @ts-ignore
     DiagramGenerator: (services) => new FettuccineDiagramGenerator(services),
     ModelLayoutEngine: (services) =>
       new ElkLayoutEngine(
@@ -75,6 +75,7 @@ export function createFettuccineServices(context: DefaultSharedModuleContext): {
   const shared = inject(
     createDefaultSharedModule(context),
     FettuccineGeneratedSharedModule,
+    // @ts-ignore
     SprottySharedModule,
   );
   const fettuccine = inject(
@@ -83,5 +84,6 @@ export function createFettuccineServices(context: DefaultSharedModuleContext): {
     FettuccineModule,
   );
   shared.ServiceRegistry.register(fettuccine);
+  // @ts-ignore
   return { shared, fettuccine };
 }

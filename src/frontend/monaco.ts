@@ -1,6 +1,5 @@
 import { buildWorkerDefinition } from "monaco-editor-workers";
 import { MonacoEditorLanguageClientWrapper } from "monaco-editor-wrapper";
-import { MonacoLanguageClient } from "monaco-languageclient";
 
 import monarchSyntax from "./syntaxes/fettuccine.monarch";
 

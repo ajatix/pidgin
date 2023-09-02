@@ -13,13 +13,18 @@ import {
   PolylineEdgeView,
   RectangularNodeView,
   SEdge,
+  RectangularPort,
   SGraph,
+  SRoutingHandle,
   SGraphView,
   SLabel,
   SLabelView,
+  SRoutingHandleView,
   SNode,
   SPort,
   TYPES,
+  editFeature,
+  CircularPort,
 } from "sprotty";
 import {
   SEdge as SEdgeAPI,
@@ -38,6 +43,7 @@ import {
   ILayoutConfigurator,
 } from "sprotty-elk/lib/inversify";
 import { LSWorkerDiagramServerProxy } from "./ls-worker-proxy";
+import { EdgeArrow } from "./views";
 
 const elkFactory: ElkFactory = () =>
   new ElkConstructor({
@@ -62,13 +68,32 @@ const createContainer = (containerId: string, client: MonacoLanguageClient) => {
 
       configureModelElement(context, "graph", SGraph, SGraphView);
       configureModelElement(context, "node", SNode, RectangularNodeView);
-      configureModelElement(context, "port", SPort, CircularNodeView);
+      configureModelElement(context, "port", CircularPort, CircularNodeView);
+      configureModelElement(
+        context,
+        "routing-point",
+        SRoutingHandle,
+        SRoutingHandleView,
+      );
+      configureModelElement(
+        context,
+        "volatile-routing-point",
+        SRoutingHandle,
+        SRoutingHandleView,
+      );
       configureModelElement(context, "label", SLabel, SLabelView);
-      configureModelElement(context, "edge", SEdge, PolylineEdgeView);
+      configureModelElement(context, "label:edge", SLabel, SLabelView);
+      configureModelElement(context, "label:arrow", SLabel, EdgeArrow);
+      configureModelElement(context, "edge", SEdge, PolylineEdgeView, {
+        disable: [editFeature],
+      });
 
       configureViewerOptions(context, {
         needsClientLayout: true,
-        needsServerLayout: true,
+        needsServerLayout: false,
+        zoomLimits: { min: 0.4, max: 1.5 },
+        horizontalScrollLimits: { min: -1950, max: 2150 },
+        verticalScrollLimits: { min: -950, max: 1500 },
         baseDiv: containerId,
       });
     },

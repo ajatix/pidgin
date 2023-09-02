@@ -8,14 +8,18 @@ import { SEdge, SLabel, SModelRoot, SNode, SPort } from "sprotty-protocol";
 import { Edge, Model, Node, Port } from "./language/generated/ast";
 
 export class FettuccineDiagramGenerator extends LangiumDiagramGenerator {
+  // @ts-ignore
   protected generateRoot(args: GeneratorContext<Model>): SModelRoot {
     const { document, idCache } = args;
     const model = document.parseResult.value;
+
     return {
       type: "graph",
       id: "root",
       children: [
+        // @ts-ignore
         ...model.nodes.map((node) => this.generateNode(node, idCache)),
+        // @ts-ignore
         ...model.edges.map((edge) => this.generateEdge(edge, idCache)),
       ],
     };
@@ -32,7 +36,7 @@ export class FettuccineDiagramGenerator extends LangiumDiagramGenerator {
         {
           type: "label",
           id: idCache.uniqueId(nodeId + ".label"),
-          text: node.name,
+          text: node.label ?? node.name,
         } as SLabel,
         ...node.ports.map(
           (port) => port.ref && this.generatePort(port.ref, nodeId, idCache),
