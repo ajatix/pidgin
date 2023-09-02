@@ -1,34 +1,34 @@
+import { LayoutOptions } from "elkjs/lib/elk-api";
+import ElkConstructor from "elkjs/lib/elk.bundled";
 import { Container, ContainerModule } from "inversify";
+import { MonacoLanguageClient } from "monaco-languageclient";
 import {
   CircularNodeView,
+  configureModelElement,
+  configureViewerOptions,
   ConsoleLogger,
-  LocalModelSource,
+  edgeIntersectionModule,
+  loadDefaultModules,
   LogLevel,
   PolylineEdgeView,
   RectangularNodeView,
-  SGraphView,
-  SLabelView,
-  TYPES,
+  SEdge,
   SGraph,
+  SGraphView,
+  SLabel,
+  SLabelView,
   SNode,
   SPort,
-  SLabel,
-  SEdge,
-  configureModelElement,
-  configureViewerOptions,
-  edgeIntersectionModule,
-  loadDefaultModules,
+  TYPES,
 } from "sprotty";
 import {
-  SGraph as SGraphAPI,
-  SNode as SNodeAPI,
-  SLabel as SLabelAPI,
   SEdge as SEdgeAPI,
-  SPort as SPortAPI,
+  SGraph as SGraphAPI,
+  SLabel as SLabelAPI,
   SModelIndex,
+  SNode as SNodeAPI,
+  SPort as SPortAPI,
 } from "sprotty-protocol";
-import ElkConstructor from "elkjs/lib/elk.bundled";
-import { LayoutOptions } from "elkjs/lib/elk-api";
 
 import {
   DefaultLayoutConfigurator,
@@ -37,16 +37,18 @@ import {
   elkLayoutModule,
   ILayoutConfigurator,
 } from "sprotty-elk/lib/inversify";
+import { LSWorkerDiagramServerProxy } from "./ls-worker-proxy";
 
 const elkFactory: ElkFactory = () =>
   new ElkConstructor({
     algorithms: ["layered"],
   });
 
-const createContainer = (containerId: string) => {
+const createContainer = (containerId: string, client: MonacoLanguageClient) => {
   const fettuccineModule = new ContainerModule(
     (bind, unbind, isBound, rebind) => {
-      bind(TYPES.ModelSource).to(LocalModelSource).inSingletonScope();
+      bind(MonacoLanguageClient).toConstantValue(client);
+      bind(TYPES.ModelSource).to(LSWorkerDiagramServerProxy).inSingletonScope();
       bind(TYPES.IModelLayoutEngine).toService(ElkLayoutEngine);
       bind(ElkFactory).toConstantValue(elkFactory);
       bind(FettuccineGraphLayoutConfigurator).toSelf().inSingletonScope();
@@ -66,6 +68,7 @@ const createContainer = (containerId: string) => {
 
       configureViewerOptions(context, {
         needsClientLayout: true,
+        needsServerLayout: true,
         baseDiv: containerId,
       });
     },

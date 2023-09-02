@@ -6,3 +6,7 @@ v1
 v2
 
 - [x] adds client side elk integration
+
+v3
+
+- [ ] adds langium language server
