@@ -29,7 +29,7 @@ addDiagramHandler(connection, shared);
 
 shared.workspace.TextDocuments.onDidOpen((e) => {
   connection.sendNotification(DiagramActionNotification.type, {
-    clientId: "sprotty-showcase",
+    clientId: "fettuccine-diagram",
     action: { kind: serverReadyKind, uri: e.document.uri } as ServerReadyAction,
   });
 });

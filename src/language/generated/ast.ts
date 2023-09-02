@@ -12,22 +12,25 @@ import {
   TypeMetaData,
 } from "langium";
 
-export interface Greeting extends AstNode {
+export interface Edge extends AstNode {
   readonly $container: Model;
-  readonly $type: "Greeting";
-  person: Reference<Person>;
+  readonly $type: "Edge";
+  port: Reference<Port>;
+  source: Reference<Node>;
+  target: Reference<Node>;
 }
 
-export const Greeting = "Greeting";
+export const Edge = "Edge";
 
-export function isGreeting(item: unknown): item is Greeting {
-  return reflection.isInstance(item, Greeting);
+export function isEdge(item: unknown): item is Edge {
+  return reflection.isInstance(item, Edge);
 }
 
 export interface Model extends AstNode {
   readonly $type: "Model";
-  greetings: Array<Greeting>;
-  persons: Array<Person>;
+  edges: Array<Edge>;
+  nodes: Array<Node>;
+  ports: Array<Port>;
 }
 
 export const Model = "Model";
@@ -36,27 +39,44 @@ export function isModel(item: unknown): item is Model {
   return reflection.isInstance(item, Model);
 }
 
-export interface Person extends AstNode {
+export interface Node extends AstNode {
   readonly $container: Model;
-  readonly $type: "Person";
+  readonly $type: "Node";
+  label?: string;
+  name: string;
+  nodes: Array<Reference<Node>>;
+  ports: Array<Reference<Port>>;
+}
+
+export const Node = "Node";
+
+export function isNode(item: unknown): item is Node {
+  return reflection.isInstance(item, Node);
+}
+
+export interface Port extends AstNode {
+  readonly $container: Model;
+  readonly $type: "Port";
+  label?: string;
   name: string;
 }
 
-export const Person = "Person";
+export const Port = "Port";
 
-export function isPerson(item: unknown): item is Person {
-  return reflection.isInstance(item, Person);
+export function isPort(item: unknown): item is Port {
+  return reflection.isInstance(item, Port);
 }
 
 export interface FettuccineAstType {
-  Greeting: Greeting;
+  Edge: Edge;
   Model: Model;
-  Person: Person;
+  Node: Node;
+  Port: Port;
 }
 
 export class FettuccineAstReflection extends AbstractAstReflection {
   getAllTypes(): string[] {
-    return ["Greeting", "Model", "Person"];
+    return ["Edge", "Model", "Node", "Port"];
   }
 
   protected override computeIsSubtype(
@@ -73,8 +93,14 @@ export class FettuccineAstReflection extends AbstractAstReflection {
   getReferenceType(refInfo: ReferenceInfo): string {
     const referenceId = `${refInfo.container.$type}:${refInfo.property}`;
     switch (referenceId) {
-      case "Greeting:person": {
-        return Person;
+      case "Edge:port":
+      case "Node:ports": {
+        return Port;
+      }
+      case "Edge:source":
+      case "Edge:target":
+      case "Node:nodes": {
+        return Node;
       }
       default: {
         throw new Error(`${referenceId} is not a valid reference id.`);
@@ -88,8 +114,18 @@ export class FettuccineAstReflection extends AbstractAstReflection {
         return {
           name: "Model",
           mandatory: [
-            { name: "greetings", type: "array" },
-            { name: "persons", type: "array" },
+            { name: "edges", type: "array" },
+            { name: "nodes", type: "array" },
+            { name: "ports", type: "array" },
+          ],
+        };
+      }
+      case "Node": {
+        return {
+          name: "Node",
+          mandatory: [
+            { name: "nodes", type: "array" },
+            { name: "ports", type: "array" },
           ],
         };
       }

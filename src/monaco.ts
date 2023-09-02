@@ -1,8 +1,10 @@
-import { MonacoEditorLanguageClientWrapper } from "monaco-editor-wrapper";
 import { buildWorkerDefinition } from "monaco-editor-workers";
+import { MonacoEditorLanguageClientWrapper } from "monaco-editor-wrapper";
 import monarchSyntax from "./syntaxes/fettuccine.monarch";
 
-const createMonacoEditor = (containerId: string) => {
+function createMonacoEditor(
+  containerId: string,
+): MonacoEditorLanguageClientWrapper {
   buildWorkerDefinition(
     "./monaco-workers",
     new URL("", window.location.href).href,
@@ -34,12 +36,10 @@ const createMonacoEditor = (containerId: string) => {
   });
   client.setWorker(lsWorker);
 
-  const startingPromise = client.startEditor(
-    document.getElementById(containerId),
-  );
+  client.startEditor(document.getElementById(containerId));
   window.addEventListener("resize", () => client.updateLayout());
 
   return client;
-};
+}
 
 export default createMonacoEditor;
