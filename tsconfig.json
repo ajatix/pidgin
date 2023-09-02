@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "lib": ["dom", "dom.iterable", "es6"],
-    "module": "commonjs",
-    "moduleResolution": "node",
+    "target": "ES2022",
+    "lib": ["DOM", "DOM.Iterable", "ES2022"],
+    "module": "CommonJS",
+    "moduleResolution": "Node",
     // added by sprotty
     "types": ["reflect-metadata"],
     "experimentalDecorators": true,

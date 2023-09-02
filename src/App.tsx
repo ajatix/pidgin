@@ -1,16 +1,12 @@
 import { Box, Grid, Grommet, Heading, Text, grommet } from "grommet";
-import { useState } from "react";
-import SprottyDiagram from "./sprotty/SprottyDiagram";
-import defaultGraph from "./sprotty/defaultGraph";
 
 import "./App.css";
 
 function App() {
-  const [graph, setGraph] = useState(defaultGraph);
   return (
     <Grommet theme={grommet} full>
       <Grid
-        rows={["xsmall", "auto"]}
+        rows={["xxsmall", "auto"]}
         columns={["large", "auto"]}
         areas={[
           { name: "header", start: [0, 0], end: [1, 0] },
@@ -27,13 +23,15 @@ function App() {
           justify="between"
           pad="small"
         >
-          <Heading color="white">Fettuccine</Heading>
-          <Text color="white" weight="bold">
+          <Heading level={3} color="white">
+            Fettuccine
+          </Heading>
+          <Text size="small" color="white" weight="bold">
             Powered by Eclipse Langium, Sprotty, ELK
           </Text>
         </Box>
-        <Box gridArea="editor" background="light-2" />
-        <SprottyDiagram graph={graph} update={false} />
+        <Box gridArea="editor" id="monaco-editor" />
+        <Box gridArea="diagram" id="fettuccine-diagram" />
       </Grid>
     </Grommet>
   );

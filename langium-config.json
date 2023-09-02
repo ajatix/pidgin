@@ -1,0 +1,15 @@
+{
+    "projectName": "Fettuccine",
+    "languages": [{
+        "id": "fettuccine",
+        "grammar": "src/language/fettuccine.langium",
+        "fileExtensions": [".fettuccine"],
+        "textMate": {
+            "out": "src/syntaxes/fettuccine.tmLanguage.json"
+        },
+        "monarch": {
+            "out": "src/syntaxes/fettuccine.monarch.ts"
+        }
+    }],
+    "out": "src/language/generated"
+}
