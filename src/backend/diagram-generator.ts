@@ -5,7 +5,7 @@ import {
   LangiumDiagramGenerator,
 } from "langium-sprotty";
 import { SEdge, SLabel, SModelRoot, SNode, SPort } from "sprotty-protocol";
-import { Edge, Model, Node, Port } from "./generated/ast";
+import { Edge, Model, Node, Port } from "./language/generated/ast";
 
 export class FettuccineDiagramGenerator extends LangiumDiagramGenerator {
   protected generateRoot(args: GeneratorContext<Model>): SModelRoot {

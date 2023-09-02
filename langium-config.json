@@ -1,15 +1,17 @@
 {
-    "projectName": "Fettuccine",
-    "languages": [{
-        "id": "fettuccine",
-        "grammar": "src/language/fettuccine.langium",
-        "fileExtensions": [".fettuccine"],
-        "textMate": {
-            "out": "src/syntaxes/fettuccine.tmLanguage.json"
-        },
-        "monarch": {
-            "out": "src/syntaxes/fettuccine.monarch.ts"
-        }
-    }],
-    "out": "src/language/generated"
+  "projectName": "Fettuccine",
+  "languages": [
+    {
+      "id": "fettuccine",
+      "grammar": "src/backend/language/fettuccine.langium",
+      "fileExtensions": [".fettuccine"],
+      "textMate": {
+        "out": "src/frontend/syntaxes/fettuccine.tmLanguage.json"
+      },
+      "monarch": {
+        "out": "src/frontend/syntaxes/fettuccine.monarch.ts"
+      }
+    }
+  ],
+  "out": "src/backend/language/generated"
 }

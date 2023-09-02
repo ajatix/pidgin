@@ -20,13 +20,13 @@ import {
   ILayoutConfigurator,
 } from "sprotty-elk/lib/inversify";
 
-import { FettuccineDiagramGenerator } from "./diagram-generator";
+import { FettuccineDiagramGenerator } from "../diagram-generator";
 import { FettuccineValidator } from "./fettuccine-validator";
 import {
   FettuccineGeneratedModule,
   FettuccineGeneratedSharedModule,
 } from "./generated/module";
-import { FettuccineLayoutConfigurator } from "./layout-config";
+import { FettuccineLayoutConfigurator } from "../layout-config";
 
 export type FettuccineAddedServices = {
   validation: {
@@ -61,7 +61,7 @@ export const FettuccineModule: Module<
     ElkFactory: () => () =>
       new ElkConstructor({
         algorithms: ["layered"],
-        workerUrl: "../elk-workers/elk-worker.js",
+        workerUrl: "./elk-workers/elk-worker.js",
       }),
     ElementFilter: () => new DefaultElementFilter(),
     LayoutConfigurator: () => new FettuccineLayoutConfigurator(),

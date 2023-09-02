@@ -7,7 +7,7 @@ import {
   createConnection,
 } from "vscode-languageserver/browser.js";
 import { ServerReadyAction, serverReadyKind } from "../protocol/handshake";
-import { createFettuccineServices } from "./fettuccine-module";
+import { createFettuccineServices } from "./language/fettuccine-module";
 
 /* browser specific setup code */
 const messageReader = new BrowserMessageReader(self);
@@ -23,6 +23,7 @@ const { shared } = createFettuccineServices({
 
 // Start the language server with the shared services
 console.log("starting language server");
+// @ts-ignore
 startLanguageServer(shared);
 
 addDiagramHandler(connection, shared);

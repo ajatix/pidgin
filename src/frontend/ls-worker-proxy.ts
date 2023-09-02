@@ -6,11 +6,8 @@ import { ActionMessage, RequestModelAction } from "sprotty-protocol";
 import { ServerReadyAction } from "../protocol/handshake";
 
 export class LSWorkerDiagramServerProxy extends DiagramServerProxy {
-  constructor(
-    @inject(MonacoLanguageClient) private client: MonacoLanguageClient,
-  ) {
-    super();
-  }
+  // @ts-ignore
+  @inject(MonacoLanguageClient) private client: MonacoLanguageClient;
 
   start() {
     this.client.onNotification(DiagramActionNotification.type, (action) => {

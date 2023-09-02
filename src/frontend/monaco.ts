@@ -1,15 +1,11 @@
 import { buildWorkerDefinition } from "monaco-editor-workers";
 import { MonacoEditorLanguageClientWrapper } from "monaco-editor-wrapper";
+import { MonacoLanguageClient } from "monaco-languageclient";
+
 import monarchSyntax from "./syntaxes/fettuccine.monarch";
 
-function createMonacoEditor(
-  containerId: string,
-): MonacoEditorLanguageClientWrapper {
-  buildWorkerDefinition(
-    "./monaco-workers",
-    new URL("", window.location.href).href,
-    false,
-  );
+function createMonacoEditor(containerId: string) {
+  buildWorkerDefinition("./monaco-workers", window.location.href, false);
 
   MonacoEditorLanguageClientWrapper.addMonacoStyles("monaco-editor-styles");
 
@@ -19,14 +15,26 @@ function createMonacoEditor(
 
   editorConfig.setMonarchTokensProvider(monarchSyntax);
 
-  editorConfig.setMainCode(`// Fettuccine is running in the web!`);
+  editorConfig.setMainCode(`port p1
+port p2  
+
+node n1 {
+  p1
+}
+
+node n2 {
+  p1 p2
+}
+
+edge n1 to n2 on p1`);
+
   editorConfig.setTheme("vs-light");
-  editorConfig.setUseLanguageClient(false);
+  editorConfig.setUseLanguageClient(true);
   editorConfig.setUseWebSocket(false);
 
   const workerURL = new URL(
     "./fettuccine-server-worker.js",
-    new URL("", window.location.href).href,
+    window.location.href,
   );
   console.log(workerURL.href);
 
@@ -36,10 +44,14 @@ function createMonacoEditor(
   });
   client.setWorker(lsWorker);
 
-  client.startEditor(document.getElementById(containerId));
-  window.addEventListener("resize", () => client.updateLayout());
+  const editorPromise = client.startEditor(
+    document.getElementById(containerId),
+  );
 
-  return client;
+  return {
+    client,
+    editorPromise,
+  };
 }
 
 export default createMonacoEditor;

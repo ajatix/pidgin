@@ -9,4 +9,6 @@ v2
 
 v3
 
-- [ ] adds langium language server
+- [x] adds langium language server with server side sprotty
+- [x] adds monaco workers for editor and language client
+- [x] adds proxy for client connection to language server
