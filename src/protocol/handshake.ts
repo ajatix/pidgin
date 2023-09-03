@@ -1,6 +1,6 @@
 import { Action } from "sprotty-protocol";
 
-export const serverReadyKind = "document_ready";
+export const serverReadyKind = "documentReady";
 
 export interface ServerReadyAction extends Action {
   kind: typeof serverReadyKind;

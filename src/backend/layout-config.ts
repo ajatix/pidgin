@@ -10,7 +10,7 @@ export class FettuccineLayoutConfigurator extends DefaultLayoutConfigurator {
     return {
       "org.eclipse.elk.algorithm": "org.eclipse.elk.layered",
       "org.eclipse.elk.direction": "LEFT",
-      "org.eclipse.elk.edgeRouting": "ORTHOGONAL",
+      "org.eclipse.elk.edgeRouting": "SPLINES",
       "org.eclipse.elk.spacing.nodeNode": "30.0",
       "org.eclipse.elk.layered.spacing.edgeNodeBetweenLayers": "30.0",
       "org.eclipse.elk.spacing.edgeEdge": "30.0",
@@ -24,7 +24,8 @@ export class FettuccineLayoutConfigurator extends DefaultLayoutConfigurator {
   ): LayoutOptions {
     return {
       "org.eclipse.elk.portAlignment.default": "BEGIN",
-      "org.eclipse.elk.portConstraints": "FIXED_SIDE",
+      "org.eclipse.elk.portConstraints": "FREE",
+      "org.eclipse.elk.portLabels.placement": "INSIDE NEXT_TO_PORT_IF_POSSIBLE",
     };
   }
 

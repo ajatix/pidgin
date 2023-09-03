@@ -16,7 +16,15 @@ fragment LABEL_CONFIG:
 ;
 
 fragment NODE_CONFIG:
-    '{' (ports+=[Port]|nodes+=[Node])+ '}'
+    '{' (inputs+=InputPort|outputs+=OutputPort|nodes+=Node)+ '}'
+;
+
+InputPort:
+    'input' port=[Port:ID]
+;
+
+OutputPort:
+    'output' port=[Port:ID]
 ;
 
 Node:
@@ -28,6 +36,6 @@ Port:
 ;
 
 Edge:
-    'edge' source=[Node] 'to' target=[Node] 'on' port=[Port]
+    'edge' source=[Node] 'to' target=[Node] ('on' port=[Port])? LABEL_CONFIG?
 ;
 

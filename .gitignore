@@ -18,11 +18,14 @@
 .env.test.local
 .env.production.local
 
+yarn.lock
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# web-workers
-public/
-src/syntaxes
-fettuccine
+# ignore generated
+public
+syntaxes
+generated
+dist
+out

@@ -1,7 +1,5 @@
 import { Box, Grid, Grommet, Heading, Text, grommet } from "grommet";
 
-import React from "react";
-
 import "./App.css";
 import { useEffect } from "react";
 import startFettuccine from "./fettuccine";

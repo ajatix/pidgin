@@ -27,6 +27,7 @@
     "prepare:monaco": "shx cp -R node_modules/monaco-editor-workers/dist/workers public/monaco-workers",
     "prepare:elk": "shx mkdir public/elk-workers & shx cp -R node_modules/elkjs/lib/elk-worker.js public/elk-workers/elk-worker.js",
     "prepare": "yarn clean && yarn generate:langium && yarn prepare:langium && yarn prepare:monaco && yarn prepare:elk",
+    "dev": "yarn clean && yarn generate:langium && yarn prepare:langium",
     "start": "react-scripts start",
     "build": "yarn prepare && react-scripts build"
   },

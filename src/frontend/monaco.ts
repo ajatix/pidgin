@@ -18,11 +18,12 @@ function createMonacoEditor(containerId: string) {
 port p2  
 
 node n1 {
-  p1
+  output p1
 }
 
 node n2 {
-  p1 p2
+  input p1
+  output p2
 }
 
 edge n1 to n2 on p1`);
